@@ -42,6 +42,12 @@ public class LoginServlet extends HttpServlet {
 
          if (validLogin) {
             msgOutput = "SUCCESS";
+            Cookie cookie = new Cookie("FileShareSite", username);
+            cookie.setMaxAge(60);
+            cookie.setDomain("ec2-54-153-35-253.us-west-1.compute.amazonaws.com");
+            cookie.setSecure(true);
+            cookie.setHttpOnly(true);
+            response.addCookie(cookie);
          } else {
             msgOutput = "Invalid username or password";
          }
