@@ -7,14 +7,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login Example</title>
+<title>Signup</title>
 </head>
 <body>
 
 <form name="loginform" action="login" method="post">
-	<p>Enter New User Name: <input name="username" type="text"><br>
-	Enter New Password: <input name="password" type="password"><br>
-	Reenter New Password: <input name="passwordCopy" type="password"><br>
+	<p>Enter New User Name: <input name="username" type="text" maxlength="15"><br>
+	Enter New Password: <input name="password" type="password" maxlength="15"><br>
+	Reenter New Password: <input name="passwordCopy" type="password" maxlength="15"><br>
 
 <button type="submit" formmethod="post" formaction="signup">
 	Sign Up

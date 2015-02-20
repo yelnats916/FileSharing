@@ -22,15 +22,16 @@ public class LoginServlet extends HttpServlet {
 
       Class.forName("com.mysql.jdbc.Driver");
       Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/fileshare", "root", "stanley");
-      Statement stmt = con.createStatement();
+      PreparedStatement stmt = 
+         con.prepareStatement("SELECT hash from Users where username=?");
 
 		String msgOutput;
 	   
       if (username.isEmpty() || password.isEmpty()) {
          msgOutput = "Please fill in empty fields";
       } else {
-         String sql = "SELECT hash from Users where username='" + username + "'";
-         ResultSet rs = stmt.executeQuery(sql);
+         stmt.setString(1, username);
+         ResultSet rs = stmt.executeQuery();
 
          boolean validLogin = false;
 

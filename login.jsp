@@ -9,9 +9,9 @@
 <body>
 
 <form name="loginform" action="login" method="post">
-  <p>Enter User Name: <input name="username" type="text"><br>
-  Enter Password: <input name="password" type="password"><br>
-  <input type="submit">
+  <p>Enter User Name: <input name="username" type="text" maxlength="15"><br>
+  Enter Password: <input name="password" type="password" maxlength="15"><br>
+  <button type="submit"> Sign in </button>
 </form>
 
 <form>

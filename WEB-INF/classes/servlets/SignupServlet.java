@@ -19,14 +19,14 @@ public class SignupServlet extends HttpServlet {
     {
 	
 	try {
-      String sql;
 		String msgOutput;
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String passwordCopy = request.getParameter("passwordCopy");
 		Class.forName("com.mysql.jdbc.Driver"); 
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/fileshare", "root", "stanley"); 
-		Statement stmt = con.createStatement();
+		PreparedStatement stmt = 
+         con.prepareStatement("SELECT * from Users where username=?");
 
       if (username.isEmpty() || password.isEmpty() || passwordCopy.isEmpty()) {
          msgOutput = "Please fill in empty fields";
@@ -35,15 +35,17 @@ public class SignupServlet extends HttpServlet {
 		} else if (username.length() < 5 || password.length() < 5) {
          msgOutput = "Username and password must have a minimum length of 5";
       } else {
-		   sql = "SELECT * from Users where username='" + username + "'";
-         ResultSet rs = stmt.executeQuery(sql);
+         stmt.setString(1, username);
+         ResultSet rs = stmt.executeQuery();
          
          if (rs.first()) {
             msgOutput = "Username already taken";
          } else {
             String hash = PasswordHash.createHash(password);
-            sql = "insert into Users values('" + username + "','" + hash + "')";
-            stmt.executeUpdate(sql);
+            stmt = con.prepareStatement("insert into Users values(?, ?)");
+            stmt.setString(1, username);
+            stmt.setString(2, hash);
+            stmt.executeUpdate();
             msgOutput = "Sign up successful!" + " " + hash;
          }
       }
