@@ -15,7 +15,6 @@
 	<p>Enter New User Name: <input name="username" type="text"><br>
 	Enter New Password: <input name="password" type="password"><br>
 	Reenter New Password: <input name="passwordCopy" type="password"><br>
-	<input type="submit">
 
 <button type="submit" formmethod="post" formaction="signup">
 	Sign Up
