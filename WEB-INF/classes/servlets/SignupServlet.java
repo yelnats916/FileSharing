@@ -8,6 +8,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 public class SignupServlet extends HttpServlet {
 
@@ -30,16 +32,19 @@ public class SignupServlet extends HttpServlet {
          msgOutput = "Please fill in empty fields";
       } else if (!passwordCopy.equals(password)) {
 			msgOutput = "Passwords do not match";
-		} else {
+		} else if (username.length() < 5 || password.length() < 5) {
+         msgOutput = "Username and password must have a minimum length of 5";
+      } else {
 		   sql = "SELECT * from Users where username='" + username + "'";
          ResultSet rs = stmt.executeQuery(sql);
          
          if (rs.first()) {
             msgOutput = "Username already taken";
          } else {
-            sql = "insert into Users values('" + username + "','" + password + "')";
+            String hash = PasswordHash.createHash(password);
+            sql = "insert into Users values('" + username + "','" + hash + "')";
             stmt.executeUpdate(sql);
-            msgOutput = "Sign up successful!";
+            msgOutput = "Sign up successful!" + " " + hash;
          }
       }
  		

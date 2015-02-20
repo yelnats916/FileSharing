@@ -19,6 +19,13 @@
 <button type="submit" formmethod="post" formaction="signup">
 	Sign Up
 </button>
+
+<form>
+   <button type="submit" formaction="login.jsp" formmethod="get">
+      Back
+   </button>
+</form>
+
 </form>
 
 <c:if test="${not empty message}">

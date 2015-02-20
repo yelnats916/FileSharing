@@ -16,9 +16,13 @@
 
 <form>
 	<button type="submit" formaction="signup.jsp" formmethod="get">
-		Sign Up
+		Create Account
 	</button>
 </form>
+
+<c:if test="${not empty message}">
+    <h1>${message}</h1>
+</c:if>
 
 </body>
 </html>
