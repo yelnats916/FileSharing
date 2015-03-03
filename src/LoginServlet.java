@@ -48,6 +48,8 @@ public class LoginServlet extends HttpServlet {
             cookie.setSecure(true);
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
+            response.sendRedirect("home.jsp");
+            return;            
          } else {
             msgOutput = "Invalid username or password";
          }
@@ -55,7 +57,6 @@ public class LoginServlet extends HttpServlet {
 		
       stmt.close();
       con.close();
-
       request.setAttribute("message", msgOutput);
       request.getRequestDispatcher("/login.jsp").forward(request, response);
 

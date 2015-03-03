@@ -1,0 +1,15 @@
+<project name="FileSharing" default="run" basedir=".">
+
+   <path id="master-classpath">
+      <fileset dir="WEB-INF/lib" includes="*.jar"/>
+   </path> 
+
+   <target name="clean">
+      <delete dir="build"/>
+   </target>
+
+   <target name="compile">
+      <javac srcdir="src" destdir="WEB-INF/classes" classpathref="master-classpath"/>
+   </target>
+
+</project>

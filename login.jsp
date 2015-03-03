@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
@@ -9,7 +11,7 @@
    if( cookies != null ){
       for (Cookie cookie: cookies) {
          if (cookie.getName().equals("FileShareSite")) {
-            out.print("Welcome back " + cookie.getValue() + "!");
+            response.sendRedirect("home.jsp");
          }
       }
   }else{
@@ -38,7 +40,7 @@
 </form>
 
 <c:if test="${not empty message}">
-    <h1>${message}</h1>
+   <h1>${message}</h1>
 </c:if>
 
 </body>
