@@ -16,6 +16,9 @@
    <button type="submit" formaction="s3" formmethod="get">
       mybutton
    </button>
+   <button type="submit" formaction="download" formmethod="get">
+      download
+   </button>
 </form>
 
 <c:if test="${not empty message}">
