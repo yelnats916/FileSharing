@@ -18,6 +18,10 @@
    </button>
 </form>
 
+<c:if test="${not empty message}">
+   <h1>${message}</h1>
+</c:if>
+
 </body>
 </html>
 
