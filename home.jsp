@@ -21,6 +21,11 @@
    </button>
 </form>
 
+<form action="upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <input type="submit" />
+</form>
+
 <c:if test="${not empty message}">
    <h1>${message}</h1>
 </c:if>

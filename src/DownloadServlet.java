@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.S3Object;
@@ -34,10 +35,7 @@ public class DownloadServlet extends HttpServlet {
    @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
    throws IOException, ServletException {
-      AWSCredentials credentials = new BasicAWSCredentials(
-         "AKIAJK6CDWQ7EEPXP45Q", "D2auJzePUKq2AHXbsU1W3ZFtiBRcMNupKEcjfIh6");
-
-      AmazonS3 conn = new AmazonS3Client(credentials);
+      AmazonS3 conn = new AmazonS3Client(new ProfileCredentialsProvider());
     
       GeneratePresignedUrlRequest urlReq = null;
       String msgOutput = null;
