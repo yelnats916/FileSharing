@@ -10,10 +10,13 @@ import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.CreateBucketRequest;
+import com.amazonaws.services.s3.model.GetBucketLocationRequest;
 import com.google.common.io.*;
 
 @MultipartConfig(fileSizeThreshold=1024*1024*10,    // 10 MB 
@@ -24,9 +27,12 @@ public class UploadServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
    throws IOException, ServletException {
+
       Part filePart = null;
       for (Part part: request.getParts()) {
-         filePart = part;
+         if (part.getName().equals("fileName")) {
+            filePart = part;
+         }
       }
       String fileName = getFileName(filePart);
       InputStream fileContent = filePart.getInputStream();
@@ -40,10 +46,17 @@ public class UploadServlet extends HttpServlet {
 
       AmazonS3 s3client = new AmazonS3Client(new ProfileCredentialsProvider());
 
-      String bucketName = "stang05bucket";
+      String bucketName = request.getParameter("user").toLowerCase() + "-yelnats916";
+      if (!(s3client.doesBucketExist(bucketName))) {
+         CreateBucketRequest createReq = new CreateBucketRequest(bucketName);
+         createReq.setCannedAcl(CannedAccessControlList.BucketOwnerFullControl);
+         s3client.createBucket(createReq);
+      }
+
       try {
-         s3client.putObject(new PutObjectRequest(bucketName, fileName, filePart.getInputStream(), metadata));
-         request.setAttribute("message", "" + fileName + " " + "successfully uploaded");
+         s3client.putObject(new PutObjectRequest(bucketName, fileName, filePart.getInputStream(), metadata)
+            .withKey(fileName));
+         request.setAttribute("message", "" + fileName + " " + "successfully uploaded to " + bucketName);
          request.getRequestDispatcher("/home.jsp").forward(request, response);
       } catch (Exception ex) {
          throw ex;
