@@ -39,6 +39,7 @@
    <button type="submit" formaction="download" formmethod="get">
       download
    </button>
+   <input type="hidden" name="user" value=${cookie['FileShareSite'].value}>
 </form>
 
 <form action="upload" method="post" enctype="multipart/form-data">

@@ -38,12 +38,12 @@ public class DownloadServlet extends HttpServlet {
       AmazonS3 conn = new AmazonS3Client(new ProfileCredentialsProvider());
     
       GeneratePresignedUrlRequest urlReq = null;
-      String msgOutput = null;
       GetObjectRequest req = null;
-      for (Bucket bucket : conn.listBuckets()) {
-         msgOutput = bucket.getName();
-         req = new GetObjectRequest(bucket.getName(), "stang05HolidaySchedule.pdf");
-      }
+
+      String bucketName = request.getParameter("user") + "-yelnats916";
+      String msgOutput = bucketName;
+
+      req = new GetObjectRequest(bucketName, "stang05HolidaySchedule.pdf");
 
       response.setContentType("application/pdf");
       // forces download

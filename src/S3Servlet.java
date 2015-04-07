@@ -27,25 +27,16 @@ public class S3Servlet extends HttpServlet {
    throws IOException, ServletException {
       AmazonS3 conn = new AmazonS3Client(new ProfileCredentialsProvider());
 
-      GeneratePresignedUrlRequest urlReq = null;
-      String msgOutput = null;
-      for (Bucket bucket : conn.listBuckets()) {
-         msgOutput = bucket.getName();
-         urlReq = new GeneratePresignedUrlRequest(bucket.getName(), "stang05HolidaySchedule.pdf");
-      }
-      /*
-      s3client.putObject(new PutObjectRequest(bucketName, fileName, 
-         new File("C:\\Users\\user\\Desktop\\testvideo.mp4")));
-      */
+      String bucketName = request.getParameter("user") + "-yelnats916";
+      GeneratePresignedUrlRequest urlReq = new GeneratePresignedUrlRequest(bucketName, "RARBG.com.mp4");
 
-      response.setContentType("application/pdf");
+      //response.setContentType("application/pdf");
       // forces download
-      String headerKey = "Content-Disposition";
-      String headerValue = String.format("attachment; filename=\"%s\"", "stang05HolidaySchedule.pdf");
-      response.setHeader(headerKey, headerValue); 
+      //String headerKey = "Content-Disposition";
+      //String headerValue = String.format("attachment; filename=\"%s\"", "stang05HolidaySchedule.pdf");
+      //response.setHeader(headerKey, headerValue); 
 
       try {
-         request.setAttribute("message", msgOutput);
          response.sendRedirect("" + conn.generatePresignedUrl(urlReq));
          //request.getRequestDispatcher("" + conn.generatePresignedUrl(urlReq)).forward(request,response);
          //request.getRequestDispatcher("/home.jsp").forward(request, response);
