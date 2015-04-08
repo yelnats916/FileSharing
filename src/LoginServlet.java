@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
             cookie.setSecure(true);
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
-            response.sendRedirect("home.jsp");
+            response.sendRedirect("listing?" + "user=" + username);
             return;            
          } else {
             msgOutput = "Invalid username or password";

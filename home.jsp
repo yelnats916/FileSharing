@@ -21,7 +21,6 @@
    if (expired) {
       response.sendRedirect("login.jsp");
    }
-
 %>
 
 <html>
@@ -32,6 +31,14 @@
 <body>
 
    <h2> home page </h2>
+
+<form>
+   <form action="listing" method="get">
+   <input type="hidden" name="user" value=${cookie['FileShareSite'].value}>
+</form>
+
+   <h1> fileKeys: ${fileKeys} </h1>
+
 <form>
    <button type="submit" formaction="s3" formmethod="get">
       mybutton

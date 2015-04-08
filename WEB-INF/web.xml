@@ -75,5 +75,14 @@
        <url-pattern>/upload</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+       <servlet-name>ListingServlet</servlet-name>
+       <servlet-class>servlets.ListingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+       <servlet-name>ListingServlet</servlet-name>
+       <url-pattern>/listing</url-pattern>
+  </servlet-mapping>
+
   
  </web-app>   

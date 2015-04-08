@@ -39,8 +39,9 @@ public class DownloadServlet extends HttpServlet {
     
       GeneratePresignedUrlRequest urlReq = null;
       GetObjectRequest req = null;
+      String user = request.getParameter("user");
 
-      String bucketName = request.getParameter("user") + "-yelnats916";
+      String bucketName = user + "-yelnats916";
       String msgOutput = bucketName;
 
       req = new GetObjectRequest(bucketName, "stang05HolidaySchedule.pdf");
@@ -64,7 +65,7 @@ public class DownloadServlet extends HttpServlet {
          request.setAttribute("message", msgOutput);
       //   response.sendRedirect("home.jsp");
          //request.getRequestDispatcher("" + conn.generatePresignedUrl(urlReq)).forward(request,response);
-         request.getRequestDispatcher("/home.jsp").forward(request, response);
+         request.getRequestDispatcher("/listing?" + "user=" + user).forward(request, response);
       } catch (Exception ex) {
          throw new ServletException(ex);
       }
