@@ -28,7 +28,8 @@ public class S3Servlet extends HttpServlet {
       AmazonS3 conn = new AmazonS3Client(new ProfileCredentialsProvider());
 
       String bucketName = request.getParameter("user") + "-yelnats916";
-      GeneratePresignedUrlRequest urlReq = new GeneratePresignedUrlRequest(bucketName, "RARBG.com.mp4");
+      String fileKey = request.getParameter("fileKey");
+      GeneratePresignedUrlRequest urlReq = new GeneratePresignedUrlRequest(bucketName, fileKey);
 
       //response.setContentType("application/pdf");
       // forces download
@@ -38,8 +39,6 @@ public class S3Servlet extends HttpServlet {
 
       try {
          response.sendRedirect("" + conn.generatePresignedUrl(urlReq));
-         //request.getRequestDispatcher("" + conn.generatePresignedUrl(urlReq)).forward(request,response);
-         //request.getRequestDispatcher("/home.jsp").forward(request, response);
       } catch (Exception ex) {
          throw new ServletException(ex);
       }

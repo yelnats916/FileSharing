@@ -44,12 +44,12 @@ public class DownloadServlet extends HttpServlet {
       String bucketName = user + "-yelnats916";
       String msgOutput = bucketName;
 
-      req = new GetObjectRequest(bucketName, "stang05HolidaySchedule.pdf");
+      String fileKey = request.getParameter("fileKey");
+      req = new GetObjectRequest(bucketName, fileKey);
 
-      response.setContentType("application/pdf");
       // forces download
       String headerKey = "Content-Disposition";
-      String headerValue = String.format("attachment; filename=\"%s\"", "stang05HolidaySchedule.pdf");
+      String headerValue = String.format("attachment; filename=\"%s\"", fileKey);
       response.setHeader(headerKey, headerValue);
 
       S3Object object = conn.getObject(req);

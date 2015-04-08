@@ -30,24 +30,22 @@
 </head>
 <body>
 
-   <h2> home page </h2>
+   <h1> home page </h1>
 
-<form>
-   <form action="listing" method="get">
-   <input type="hidden" name="user" value=${cookie['FileShareSite'].value}>
-</form>
 
-   <h1> fileKeys: ${fileKeys} </h1>
-
-<form>
+<c:forEach items="${fileKeys}" var="fileKey">
+  <form>
+   <c:out value="${fileKey}"/>
    <button type="submit" formaction="s3" formmethod="get">
-      mybutton
+      play
    </button>
    <button type="submit" formaction="download" formmethod="get">
       download
    </button>
    <input type="hidden" name="user" value=${cookie['FileShareSite'].value}>
-</form>
+   <input type="hidden" name="fileKey" value="${fileKey}">
+  </form>
+</c:forEach>
 
 <form action="upload" method="post" enctype="multipart/form-data">
     <input type="file" name="fileName" />
