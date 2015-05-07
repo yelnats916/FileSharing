@@ -22,6 +22,8 @@ import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.TokenParser;
+import javax.activation.MimetypesFileTypeMap;
+import javax.activation.FileTypeMap;
 import com.google.common.io.*;
 
 @MultipartConfig(fileSizeThreshold=1024*1024*10,    // 10 MB 
@@ -40,12 +42,17 @@ public class UploadServlet extends HttpServlet {
          }
       }
       String fileName = getFileName(filePart);
+
+      MimetypesFileTypeMap mime = buildMimeMap();
+      String mimeType = mime.getContentType(fileName);
+
       InputStream fileContent = filePart.getInputStream();
      
       byte[] fileBytes = ByteStreams.toByteArray(fileContent);
       Long contentLength = Long.valueOf(fileBytes.length);
       ObjectMetadata metadata = new ObjectMetadata();
       metadata.setContentLength(contentLength);
+      metadata.setContentType(mimeType);
       
       AmazonS3 conn = new AmazonS3Client(new ProfileCredentialsProvider());
 
@@ -55,8 +62,7 @@ public class UploadServlet extends HttpServlet {
       String bucketName = user + "-yelnats916";
 
       try {
-         s3client.putObject(new PutObjectRequest(bucketName, fileName, filePart.getInputStream(), metadata)
-            .withKey(fileName));
+         s3client.putObject(bucketName, fileName, filePart.getInputStream(), metadata);
          response.sendRedirect("listing?" + "user=" + user);
          return;
       } catch (Exception ex) {
@@ -73,5 +79,24 @@ public class UploadServlet extends HttpServlet {
          }
       }
       return null;
+   }
+
+   private MimetypesFileTypeMap buildMimeMap() {
+      MimetypesFileTypeMap fileTypeMap = new MimetypesFileTypeMap();
+      fileTypeMap.addMimeTypes("audio/mpeg mp3");
+      fileTypeMap.addMimeTypes("image/bmp bmp");
+      fileTypeMap.addMimeTypes("image/gif gif");
+      fileTypeMap.addMimeTypes("image/jpeg jpg jpeg jpe");
+      fileTypeMap.addMimeTypes("image/png png");
+      fileTypeMap.addMimeTypes("text/css css");
+      fileTypeMap.addMimeTypes("text/csv csv");
+      fileTypeMap.addMimeTypes("text/html htm html");
+      fileTypeMap.addMimeTypes("text/xml xml");
+      fileTypeMap.addMimeTypes("text/plain txt");
+      fileTypeMap.addMimeTypes("video/mp4 mp4");
+      fileTypeMap.addMimeTypes("application/msword docx doc");
+      fileTypeMap.addMimeTypes("application/json json");
+      fileTypeMap.addMimeTypes("application/pdf pdf");
+      return fileTypeMap;
    }
 }

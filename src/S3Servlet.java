@@ -31,11 +31,11 @@ public class S3Servlet extends HttpServlet {
       String fileKey = request.getParameter("fileKey");
       GeneratePresignedUrlRequest urlReq = new GeneratePresignedUrlRequest(bucketName, fileKey);
 
-      //response.setContentType("application/pdf");
+      //response.setContentType("text/plain");
       // forces download
-      //String headerKey = "Content-Disposition";
-      //String headerValue = String.format("attachment; filename=\"%s\"", "stang05HolidaySchedule.pdf");
-      //response.setHeader(headerKey, headerValue); 
+      String headerKey = "Content-Disposition";
+      String headerValue = String.format("inline; filename=\"%s\"", fileKey);
+      response.setHeader(headerKey, headerValue); 
 
       try {
          response.sendRedirect("" + conn.generatePresignedUrl(urlReq));
