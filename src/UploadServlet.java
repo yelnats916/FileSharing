@@ -42,10 +42,10 @@ public class UploadServlet extends HttpServlet {
          }
       }
       String fileName = getFileName(filePart);
-
+      
       MimetypesFileTypeMap mime = buildMimeMap();
       String mimeType = mime.getContentType(fileName);
-
+      
       InputStream fileContent = filePart.getInputStream();
      
       byte[] fileBytes = ByteStreams.toByteArray(fileContent);
@@ -53,14 +53,14 @@ public class UploadServlet extends HttpServlet {
       ObjectMetadata metadata = new ObjectMetadata();
       metadata.setContentLength(contentLength);
       metadata.setContentType(mimeType);
-      
+
       AmazonS3 conn = new AmazonS3Client(new ProfileCredentialsProvider());
 
       AmazonS3 s3client = new AmazonS3Client(new ProfileCredentialsProvider());
 
       String user = request.getParameter("user").toLowerCase();
       String bucketName = user + "-yelnats916";
-
+      
       try {
          s3client.putObject(bucketName, fileName, filePart.getInputStream(), metadata);
          response.sendRedirect("listing?" + "user=" + user);
