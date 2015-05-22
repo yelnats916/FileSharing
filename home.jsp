@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 
@@ -78,9 +79,35 @@
 <p>Status Messages</p>
 </div>
 
+<form>
+   <button type="submit" formaction="addFriend" formmethod="post">
+      Add Friend
+   </button>
+   <input type="hidden" name="user" value=${cookie['FileShareSite'].value}>
+   <input name="friend" type="text" maxlength="15"><br>
+</form>
+
 <c:if test="${not empty message}">
    <h1>${message}</h1>
 </c:if>
+
+<c:forEach items="${friendFileKeys}" var="friendFileKey">
+  <form>
+   <c:set var="full" value="${friendFileKey}"/>
+   <c:set var="splitKey" value="${fn:split(full, '=')}" />
+   <c:set var="friend" value="${splitKey[0]}" />
+   <c:set var="key" value="${splitKey[1]}" />
+   <c:out value="${friend} => ${key}"/>
+   <button type="submit" formaction="s3" formmethod="get">
+      play
+   </button>
+   <button type="submit" formaction="download" formmethod="get">
+      download
+   </button>
+   <input type="hidden" name="user" value="${friend}">
+   <input type="hidden" name="fileKey" value="${key}">
+  </form>
+</c:forEach>
 
 <script src="filedrag.js"></script>
 

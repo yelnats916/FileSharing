@@ -42,7 +42,6 @@ public class UploadServlet extends HttpServlet {
          }
       }
       String fileName = getFileName(filePart);
-      
       MimetypesFileTypeMap mime = buildMimeMap();
       String mimeType = mime.getContentType(fileName);
       
@@ -62,13 +61,16 @@ public class UploadServlet extends HttpServlet {
       String bucketName = user + "-yelnats916";
       
       try {
-         s3client.putObject(bucketName, fileName, filePart.getInputStream(), metadata);
+         if (!fileName.equals("")) {
+            s3client.putObject(bucketName, fileName, filePart.getInputStream(), metadata);
+         }
          response.sendRedirect("listing?" + "user=" + user);
          return;
       } catch (Exception ex) {
          throw ex;
       }
    }
+
 
    private String getFileName(Part part)
    {
