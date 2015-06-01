@@ -55,6 +55,9 @@
    <button type="submit" formaction="download" formmethod="get">
       download
    </button>
+   <button type="submit" formaction="delete" formmethod="get">
+      delete
+   </button>
    <input type="hidden" name="user" value=${cookie['FileShareSite'].value}>
    <input type="hidden" name="fileKey" value="${fileKey}">
   </form>
