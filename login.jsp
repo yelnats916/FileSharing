@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <%
    Cookie[] cookies = null;
@@ -22,26 +22,42 @@
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset="utf-8">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<link href="signin.css" rel="stylesheet">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
 <title>Login Example</title>
 </head>
 <body>
-
-<form name="loginform" action="login" method="post">
-  <p>Enter User Name: <input name="username" type="text" maxlength="15"><br>
-  Enter Password: <input name="password" type="password" maxlength="15"><br>
-  <button type="submit"> Sign in </button>
-</form>
-
-<form>
-	<button type="submit" formaction="signup.jsp" formmethod="get">
-		Create Account
-	</button>
-</form>
-
-<c:if test="${not empty message}">
-   <h1>${message}</h1>
+<div class="container">
+<form class="form-signin" name="loginform" action="login" method="post">
+  <h2 class="form-signin-heading"> Please sign in</h2>
+  <label for="inputUser" class="sr-only">Username</label>
+  <input id="inputUser" name="username" type="text" maxlength="15" class="form-control" placeholder="Username" required autofocus>
+  <label for="inputPass" class="sr-only">Password</label>
+  <input id="inputPass" name="password" type="password" maxlength="15" class="form-control" placeholder="Password" required>
+  <div class="somespace">
+    <button class="btn btn-flat btn-lg btn-block" type="submit"> Sign in </button>
+  </div>
+  <div class="morespace">
+    <a href="https://ec2-54-153-35-253.us-west-1.compute.amazonaws.com:8443/signup.jsp">Create Account</a>
+  </div>
+   <c:if test="${not empty message}">
+  <div class="smallerheight alert alert-danger">
+    <h5>${message}</h5>
+  </div>
 </c:if>
 
+</form>
+
+</div>
+   <!-- Latest compiled and minified JavaScript -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </body>
 </html>
